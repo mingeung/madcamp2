@@ -7,6 +7,6 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface ApiService {
-    @POST("register") // Replace with your actual registration endpoint
+    @POST("register/") // Replace with your actual registration endpoint
     fun registerUser(@Body newUser: NewUser): Call<UserResponse>
 }

@@ -6,7 +6,6 @@ import retrofit2.Response
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.madcampweek2.databinding.ActivityRegisterBinding
@@ -34,7 +33,7 @@ class RegisterActivity : AppCompatActivity() {
 
             call.enqueue(object : Callback<UserResponse> {
                 override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
-                    if (response.isSuccessful && response.body()?.success == true) {
+                    if (response.isSuccessful) {
                         // Registration successful
                         val sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE)
                         val editor = sharedPreferences.edit()
@@ -47,7 +46,7 @@ class RegisterActivity : AppCompatActivity() {
                         finish()
                     } else {
                         // Handle registration failure
-                        Toast.makeText(this@RegisterActivity, "Registration failed: ${response.body()?.message}", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@RegisterActivity, "Registration failed: ${response.code()}", Toast.LENGTH_LONG).show()
                     }
                 }
 
