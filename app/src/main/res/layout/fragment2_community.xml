@@ -1,11 +1,49 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Community"
-        android:layout_gravity="center" />
+    <RelativeLayout
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+<!--검색창과 검색 버튼 - 나중에 검색 쓸 일 있으면 사용하기-->
+<!--        <EditText-->
+<!--            android:id="@+id/et"-->
+<!--            android:inputType="text"-->
+<!--            android:layout_toLeftOf="@+id/btn"-->
+<!--            android:layout_marginRight="10dp"-->
+<!--            android:hint="검색어"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"/>-->
 
-</FrameLayout>
+<!--        <Button-->
+<!--            android:id="@+id/btn"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:text="검색"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"/>-->
+<!--        글쓰기 버튼 추가-->
+        <Button
+            android:id="@+id/btnWrite"
+            android:text="글쓰기"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
+        android:orientation="vertical"/>
+
+</LinearLayout>

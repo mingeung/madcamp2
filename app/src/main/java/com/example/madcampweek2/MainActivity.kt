@@ -1,6 +1,7 @@
 package com.example.madcampweek2
 
 import SectionsPagerAdapter
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.madcampweek2.databinding.ActivityMainBinding
@@ -17,41 +18,56 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        val sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE)
+        val isFirstTime = sharedPreferences.getBoolean("isFirstTime", true)
+        val isRegistered = sharedPreferences.getBoolean("isRegistered", false)
+
+        if (isFirstTime || !isRegistered) {
+            val editor = sharedPreferences.edit()
+            editor.putBoolean("isFirstTime", false)
+            editor.apply()
+
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+            finish()
+            return
+        }
+
         setBottomNavigationView()
 
-        // 앱 초기 실행 시 홈화면으로 설정
+        // Set initial fragment on app start
         if (savedInstanceState == null) {
             binding.bottomNavigationView.selectedItemId = R.id.fragment1_home
         }
     }
 
-    fun setBottomNavigationView() {
+    private fun setBottomNavigationView() {
         binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             try {
                 when (item.itemId) {
                     R.id.fragment1_home -> {
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_Container, Fragment1_Home()).commit()
-                        return@setOnNavigationItemSelectedListener true
+                        true
                     }
 
                     R.id.fragment2_community -> {
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_Container, Fragment2_Community()).commit()
-                        return@setOnNavigationItemSelectedListener true
+                        true
                     }
 
                     R.id.fragment3_profile -> {
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_Container, Fragment3_Profile()).commit()
-                        return@setOnNavigationItemSelectedListener true
+                        true
                     }
 
-                    else -> return@setOnNavigationItemSelectedListener false
+                    else -> false
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                return@setOnNavigationItemSelectedListener false
+                false
             }
         }
     }
