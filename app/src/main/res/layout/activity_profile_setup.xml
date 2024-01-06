@@ -19,7 +19,7 @@
         android:hint="Enter GitHub URL"/>
 
     <Spinner
-        android:id="@+id/classGroupSpinner"
+        android:id="@+id/groupSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <!-- Populate the Spinner with class group options 1 to 4 -->

@@ -1,7 +1,9 @@
 package com.example.madcampweek2
 
+import android.R
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
@@ -25,11 +27,15 @@ class ProfileSetupActivity : AppCompatActivity() {
 
         val nicknameEditText: EditText = binding.nicknameEditText
         val githubUrlEditText: EditText = binding.githubUrlEditText
-        val classGroupSpinner: Spinner = binding.classGroupSpinner
+        val classGroupSpinner: Spinner = binding.groupSpinner
         val uploadImageButton: Button = binding.uploadImageButton
         val submitProfileButton: Button = binding.submitProfileButton
 
-        // Add listeners and logic for image upload and form submission
+        // Populate the Spinner with class group options
+        val classGroups = arrayOf("1", "2", "3", "4")
+        val adapter = ArrayAdapter(this, R.layout.simple_spinner_item, classGroups)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        classGroupSpinner.adapter = adapter
 
         submitProfileButton.setOnClickListener {
             val nickname = nicknameEditText.text.toString()
@@ -41,12 +47,12 @@ class ProfileSetupActivity : AppCompatActivity() {
                 .enqueue(object : Callback<UserResponse> {
                     override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                         if (response.isSuccessful) {
-                            // Handle successful profile update
+                            // Navigate to MainActivity on successful profile update
                             val intent = Intent(this@ProfileSetupActivity, MainActivity::class.java)
                             startActivity(intent)
                             finish()
                         } else {
-                            // Handle errors
+                            // Handle registration failure
                         }
                     }
 
@@ -56,6 +62,6 @@ class ProfileSetupActivity : AppCompatActivity() {
                 })
         }
 
-        // TODO: Add logic for image upload button
+        // TODO: Implement the logic for image upload button if needed
     }
 }
