@@ -41,7 +41,7 @@ class RegisterActivity : AppCompatActivity() {
                         editor.apply()
 
                         // Redirect to MainActivity or another activity
-                        val intent = Intent(this@RegisterActivity, MainActivity::class.java)
+                        val intent = Intent(this@RegisterActivity, ProfileSetupActivity::class.java)
                         startActivity(intent)
                         finish()
                     } else {

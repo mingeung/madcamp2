@@ -1,0 +1,45 @@
+<!-- Layout for ProfileSetupActivity -->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditText
+        android:id="@+id/nicknameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Nickname"/>
+
+    <EditText
+        android:id="@+id/githubUrlEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter GitHub URL"/>
+
+    <Spinner
+        android:id="@+id/classGroupSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <!-- Populate the Spinner with class group options 1 to 4 -->
+
+    <ImageView
+        android:id="@+id/profileImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <!-- Placeholder for profile image -->
+
+    <Button
+        android:id="@+id/uploadImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload Image"/>
+
+    <Button
+        android:id="@+id/submitProfileButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save Profile"/>
+
+</LinearLayout>
