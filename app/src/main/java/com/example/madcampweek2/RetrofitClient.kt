@@ -1,14 +1,24 @@
-package com.example.madcampweek2.network  // Replace with your actual package name
+package com.example.madcampweek2.network
 
-import com.example.madcampweek2.network.ApiService
+import android.content.Context
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    val retrofitInstance: ApiService by lazy {
-        Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8000/") // Replace with your base URL
+    fun getInstance(context: Context): ApiService {
+        val logging = HttpLoggingInterceptor()
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(logging)
+            .build()
+
+        return Retrofit.Builder()
+            .baseUrl("http://192.249.28.99:8000/") // Replace with your base URL
             .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
             .build()
             .create(ApiService::class.java)
     }

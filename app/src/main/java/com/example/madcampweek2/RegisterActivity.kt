@@ -23,29 +23,38 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     fun onRegisterClicked(view: View) {
+        // Extract user input from EditText fields
         val email = binding.emailEditText.text.toString()
         val password = binding.passwordEditText.text.toString()
         val name = binding.nameEditText.text.toString()
+        val nickname = binding.nicknameEditText.text.toString()
+        val classGroupSpinner = binding.classGroupSpinner
 
-        if (validateInput(email, password, name)) {
-            val newUser = NewUser(email, password, name)
-            val call = RetrofitClient.retrofitInstance.registerUser(newUser)
+        // Extract the selected class group from the Spinner
+        val classGroupIndex = binding.classGroupSpinner.selectedItemPosition + 1
+        val classGroup = classGroupIndex.toString()
+
+        val newUser = NewUser(email, password, name, nickname, classGroup)
+
+        if (validateInput(email, password, name, nickname, classGroup)) {
+            // Make a Retrofit API call to register the user
+            val call = RetrofitClient.getInstance(this).registerUser(newUser)
 
             call.enqueue(object : Callback<UserResponse> {
                 override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                     if (response.isSuccessful) {
-                        // Registration successful
+                        // Save registration status
                         val sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE)
                         val editor = sharedPreferences.edit()
                         editor.putBoolean("isRegistered", true)
                         editor.apply()
 
-                        // Redirect to MainActivity or another activity
-                        val intent = Intent(this@RegisterActivity, ProfileSetupActivity::class.java)
+                        // Navigate to MainActivity
+                        val intent = Intent(this@RegisterActivity, MainActivity::class.java)
                         startActivity(intent)
                         finish()
                     } else {
-                        // Handle registration failure
+                        // Handle registration failure with specific error message
                         Toast.makeText(this@RegisterActivity, "Registration failed: ${response.code()}", Toast.LENGTH_LONG).show()
                     }
                 }
@@ -60,8 +69,8 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun validateInput(email: String, password: String, name: String): Boolean {
+    private fun validateInput(email: String, password: String, name: String, nickname: String, classGroup: String): Boolean {
         // Add your input validation logic here
-        return email.isNotBlank() && password.isNotBlank() && name.isNotBlank()
+        return email.isNotBlank() && password.isNotBlank() && name.isNotBlank() && nickname.isNotBlank() && classGroup.isNotBlank()
     }
 }

@@ -39,25 +39,25 @@ class Fragment3_Profile : Fragment() {
     }
 
     private fun fetchUserProfile() {
-        // Assuming you have a Retrofit call set up to fetch the user profile
-        RetrofitClient.retrofitInstance.getUserProfile() // Replace with your actual method
-            .enqueue(object : Callback<UserProfileResponse> { // Replace UserProfileResponse with your response model
-                override fun onResponse(call: Call<UserProfileResponse>, response: Response<UserProfileResponse>) {
-                    if (response.isSuccessful) {
-                        val userProfile = response.body()
-                        // Update UI with user profile data
-                        userProfile?.let {
-                            usernameTextView.text = it.nickname  // Assuming 'nickname' field in your response
-                            emailTextView.text = it.email      // Assuming 'email' field in your response
+        context?.let { ctx ->
+            RetrofitClient.getInstance(ctx).getUserProfile() // Correctly accessing the Retrofit instance
+                .enqueue(object : Callback<UserProfileResponse> {
+                    override fun onResponse(call: Call<UserProfileResponse>, response: Response<UserProfileResponse>) {
+                        if (response.isSuccessful) {
+                            val userProfile = response.body()
+                            userProfile?.let {
+                                usernameTextView.text = it.nickname  // Assuming 'nickname' field in your response
+                                emailTextView.text = it.email      // Assuming 'email' field in your response
+                            }
+                        } else {
+                            // Handle errors
                         }
-                    } else {
-                        // Handle errors
                     }
-                }
 
-                override fun onFailure(call: Call<UserProfileResponse>, t: Throwable) {
-                    // Handle network errors
-                }
-            })
+                    override fun onFailure(call: Call<UserProfileResponse>, t: Throwable) {
+                        // Handle network errors
+                    }
+                })
+        }
     }
 }

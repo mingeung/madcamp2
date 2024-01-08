@@ -1,3 +1,11 @@
 <resources>
     <string name="madcamp2_app">MadcampWeek2</string>
+
+    <string-array name="class_groups">
+        <item>Group 1</item>
+        <item>Group 2</item>
+        <item>Group 3</item>
+        <item>Group 4</item>
+    </string-array>
+
 </resources>

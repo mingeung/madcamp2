@@ -24,6 +24,20 @@
         android:layout_height="wrap_content"
         android:hint="Name" />
 
+    <EditText
+        android:id="@+id/nicknameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nickname" />
+
+    <!-- Spinner for Class Group Selection -->
+        <Spinner
+        android:id="@+id/classGroupSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Select Class Group"
+        android:entries="@array/class_groups" />
+
     <Button
         android:id="@+id/registerButton"
         android:layout_width="wrap_content"
