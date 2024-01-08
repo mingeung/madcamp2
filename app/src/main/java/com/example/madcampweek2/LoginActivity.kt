@@ -2,12 +2,20 @@ package com.example.madcampweek2
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.madcampweek2.databinding.ActivityLoginBinding
+import com.example.madcampweek2.model.UserCheckResponse
+import com.example.madcampweek2.network.ApiService
 import com.example.madcampweek2.network.LoginResponse
 import com.example.madcampweek2.network.RetrofitClient
 import com.example.madcampweek2.network.UserCredentials
+import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.common.model.AuthErrorCause
+import com.kakao.sdk.user.Constants.TAG
+import com.kakao.sdk.user.UserApiClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -31,6 +39,95 @@ class LoginActivity : AppCompatActivity() {
         binding.registerButton.setOnClickListener {
             navigateToRegister()
         }
+        binding.kakaoLoginButton.setOnClickListener {
+            handleKakaoLogin()
+        }
+    }
+    private fun handleKakaoLogin() {
+        UserApiClient.instance.loginWithKakaoAccount(this) { token, error ->
+            if (error != null) {
+                // Handle login error
+            } else if (token != null) {
+                // Get user info from Kakao
+                UserApiClient.instance.me { user, error ->
+                    if (error != null) {
+                        // Handle error
+                    } else if (user != null && user.kakaoAccount?.email != null) {
+                        val email = user.kakaoAccount!!.email!!
+                        checkUserInSystem(email)
+                    }
+                }
+            }
+        }
+    }
+    private fun checkUserInSystem(email: String) {
+        val apiService = RetrofitClient.getInstance()
+        apiService.checkUser(email).enqueue(object : Callback<UserCheckResponse> {
+            override fun onResponse(
+                call: Call<UserCheckResponse>,
+                response: Response<UserCheckResponse>
+            ) {
+                if (response.isSuccessful && response.body() != null) {
+                    val userResponse = response.body()!!
+                    if (userResponse.exists) {
+                        // User exists - proceed with login or further actions
+                        handleExistingUser(userResponse.userId)
+                    } else {
+                        // User does not exist - redirect to registration
+                        navigateToRegistration(email)
+                    }
+                } else {
+                    // Handle API error
+                    handleApiError()
+                }
+            }
+
+            override fun onFailure(call: Call<UserCheckResponse>, t: Throwable) {
+                // Handle network error
+                handleNetworkError()
+            }
+        })
+    }
+
+    private fun handleExistingUser(userId: Int?) {
+        // Implement logic to handle an existing user
+        // This could be logging them in or taking some other action
+    }
+
+    private fun navigateToRegistration(email: String) {
+        // Implement logic to navigate to the Registration Activity
+        // Pass the email as an extra
+    }
+
+    private fun handleApiError() {
+        // Handle API error scenario
+    }
+
+    private fun handleNetworkError() {
+        // Handle network error scenario
+    }
+
+    private fun initiateKakaoLogin() {
+        val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+            if (error != null) {
+                // Handle error scenario
+            } else if (token != null) {
+                // Handle successful login, navigate to MainActivity
+                navigateToMainActivity()
+            }
+        }
+
+        if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
+            UserApiClient.instance.loginWithKakaoTalk(this, callback = callback)
+        } else {
+            UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
+        }
+    }
+
+    private fun navigateToMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun validateInput(email: String, password: String): Boolean {
@@ -44,7 +141,7 @@ class LoginActivity : AppCompatActivity() {
     private fun performLogin(email: String, password: String) {
         val credentials = UserCredentials(email, password)
 
-        RetrofitClient.getInstance(this).loginUser(credentials).enqueue(object :
+        RetrofitClient.getInstance().loginUser(credentials).enqueue(object :
             Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {

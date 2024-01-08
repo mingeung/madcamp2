@@ -40,7 +40,7 @@ class Fragment3_Profile : Fragment() {
 
     private fun fetchUserProfile() {
         context?.let { ctx ->
-            RetrofitClient.getInstance(ctx).getUserProfile() // Correctly accessing the Retrofit instance
+            RetrofitClient.getInstance().getUserProfile() // Correctly accessing the Retrofit instance
                 .enqueue(object : Callback<UserProfileResponse> {
                     override fun onResponse(call: Call<UserProfileResponse>, response: Response<UserProfileResponse>) {
                         if (response.isSuccessful) {

@@ -31,3 +31,5 @@ data class UserProfileResponse(
     val nickname: String,
     // Add other fields as per your API response
 )
+
+data class UserCheckResponse(val exists: Boolean, val userId: Int?)

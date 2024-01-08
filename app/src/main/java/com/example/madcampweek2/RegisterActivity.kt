@@ -38,7 +38,7 @@ class RegisterActivity : AppCompatActivity() {
 
         if (validateInput(email, password, name, nickname, classGroup)) {
             // Make a Retrofit API call to register the user
-            val call = RetrofitClient.getInstance(this).registerUser(newUser)
+            val call = RetrofitClient.getInstance().registerUser(newUser)
 
             call.enqueue(object : Callback<UserResponse> {
                 override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {

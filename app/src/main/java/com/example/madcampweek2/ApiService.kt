@@ -2,12 +2,14 @@ package com.example.madcampweek2.network  // Replace with your actual package na
 
 import com.example.madcampweek2.model.NewUser
 import com.example.madcampweek2.model.ProfileData
+import com.example.madcampweek2.model.UserCheckResponse
 import com.example.madcampweek2.model.UserProfileResponse
 import com.example.madcampweek2.model.UserResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 data class UserCredentials(val email: String, val password: String)
 
@@ -25,4 +27,7 @@ interface ApiService {
 
     @POST("login/")
     fun loginUser(@Body credentials: UserCredentials): Call<LoginResponse>
+
+    @GET("checkUser/")
+    fun checkUser(@Query("email") email: String): Call<UserCheckResponse>
 }
