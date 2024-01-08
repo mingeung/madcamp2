@@ -43,14 +43,14 @@ class RegisterActivity : AppCompatActivity() {
             call.enqueue(object : Callback<UserResponse> {
                 override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                     if (response.isSuccessful) {
-                        // Save registration status
+                        // Optionally set isRegistered flag if needed
                         val sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE)
                         val editor = sharedPreferences.edit()
                         editor.putBoolean("isRegistered", true)
                         editor.apply()
 
                         // Navigate to MainActivity
-                        val intent = Intent(this@RegisterActivity, MainActivity::class.java)
+                        val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                         startActivity(intent)
                         finish()
                     } else {
