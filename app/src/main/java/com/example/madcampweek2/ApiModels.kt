@@ -13,10 +13,9 @@ data class NewUser(
 )
 
 // Model for the user response
-data class UserResponse(
-    val success: Boolean,
-    val message: String,
-)
+data class UserCredentials(val email: String, val password: String)
+
+data class UserResponse(val success: Boolean, val message: String, val token: String)
 
 // Model for updating user profile data
 data class ProfileData(
@@ -34,3 +33,9 @@ data class UserProfileResponse(
 )
 
 data class UserCheckResponse(val exists: Boolean, val userId: Int?)
+
+data class LoginResponse(
+    val success: Boolean,
+    val message: String,
+    val token: String   // Ensure this field exists and matches the JSON response from your backend
+)

@@ -7,11 +7,10 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.madcampweek2.databinding.ActivityLoginBinding
+import com.example.madcampweek2.model.LoginResponse
 import com.example.madcampweek2.model.UserCheckResponse
-import com.example.madcampweek2.network.ApiService
-import com.example.madcampweek2.network.LoginResponse
+import com.example.madcampweek2.model.UserCredentials
 import com.example.madcampweek2.network.RetrofitClient
-import com.example.madcampweek2.network.UserCredentials
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.user.Constants.TAG
@@ -65,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
     private fun checkUserInSystem(email: String) {
-        val apiService = RetrofitClient.getInstance()
+        val apiService = RetrofitClient.getInstance(this)
         apiService.checkUser(email).enqueue(object : Callback<UserCheckResponse> {
             override fun onResponse(
                 call: Call<UserCheckResponse>,
@@ -99,8 +98,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun navigateToRegistration(email: String) {
-        // Implement logic to navigate to the Registration Activity
-        // Pass the email as an extra
+        val intent = Intent(this, RegisterActivity::class.java)
+        intent.putExtra("email", email) // Passing the email to the Registration Activity
+        startActivity(intent)
     }
 
     private fun handleApiError() {
@@ -145,14 +145,19 @@ class LoginActivity : AppCompatActivity() {
     private fun performLogin(email: String, password: String) {
         val credentials = UserCredentials(email, password)
 
-        RetrofitClient.getInstance().loginUser(credentials).enqueue(object :
+        RetrofitClient.getInstance(this).loginUser(credentials).enqueue(object :
             Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
-                    // Save login status
+                    val loginResponse = response.body()
+                    val token = loginResponse?.token // Assuming your LoginResponse includes the token
+
+                    // Store the token in SharedPreferences
                     val sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE)
                     val editor = sharedPreferences.edit()
+                    editor.putString("authToken", token) // Storing the token
                     editor.putBoolean("isLoggedIn", true)
+                    editor.putBoolean("isRegistered", true)  // Add this line
                     editor.apply()
 
                     // Navigate to MainActivity
@@ -181,4 +186,5 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+
 }

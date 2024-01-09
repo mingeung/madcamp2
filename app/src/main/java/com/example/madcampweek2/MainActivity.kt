@@ -28,10 +28,12 @@ class MainActivity : AppCompatActivity() {
         val isRegistered = sharedPreferences.getBoolean("isRegistered", false)
         val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
 
-        if (!isRegistered) {
-            navigateToRegister()
-        } else if (!isLoggedIn) {
-            navigateToLogin()
+        if (!isLoggedIn) {
+            if (!isRegistered) {
+                navigateToRegister()
+            } else {
+                navigateToLogin()
+            }
         }
         // If the user is registered and logged in, continue with MainActivity's setup
     }
@@ -72,15 +74,5 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
-    }
-
-    // Example logout function (You need to call this from an appropriate place in your app)
-    private fun logout() {
-        val sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putBoolean("isLoggedIn", false)
-        editor.apply()
-
-        navigateToLogin()
     }
 }
