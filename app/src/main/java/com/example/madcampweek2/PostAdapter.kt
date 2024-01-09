@@ -1,3 +1,4 @@
+//PostAdapter.kt
 package com.example.madcampweek2
 
 import android.view.LayoutInflater
@@ -28,6 +29,10 @@ class PostAdapter(private val onPostClickListener: PostClickListener) : Recycler
 //        holder.writerTextView.text = post.writer.nickname
         holder.createdAtTextView.text = DateUtils.convertToSeoulTime(post.created_at)
 
+        // 게시물 클릭 이벤트 처리
+        holder.itemView.setOnClickListener {
+            onPostClickListener.onPostClick(post)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -40,9 +45,6 @@ class PostAdapter(private val onPostClickListener: PostClickListener) : Recycler
         notifyDataSetChanged()
     }
 
-    fun setPost(it: Post) {
-
-    }
 
     class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val titleTextView: TextView = itemView.findViewById(R.id.titleTextView)

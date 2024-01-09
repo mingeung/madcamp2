@@ -55,7 +55,7 @@ object RetrofitClient {
                 .build()
 
             apiService = Retrofit.Builder()
-                .baseUrl("http://172.10.7.27:80/") // Replace with your base URL
+                .baseUrl("http://10.0.2.2:8001/") // Replace with your base URL
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build()

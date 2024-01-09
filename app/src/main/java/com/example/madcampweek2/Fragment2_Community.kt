@@ -1,3 +1,4 @@
+//Fragment2_Community
 package com.example.madcampweek2
 
 import PostService
@@ -21,8 +22,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
-
 
 class Fragment2_Community : Fragment(),PostAdapter.PostClickListener {
     private lateinit var recyclerView: RecyclerView
@@ -74,8 +73,6 @@ class Fragment2_Community : Fragment(),PostAdapter.PostClickListener {
                 Log.e("NetworkError", "Network request failed", t)
             }
         })
-
-
 //        // 예시 데이터
 //        val examplePosts = listOf(
 //            Post("제목 1", "내용 1"),
@@ -112,7 +109,12 @@ class Fragment2_Community : Fragment(),PostAdapter.PostClickListener {
     }
 
     override fun onPostClick(post: Post) {
-        // Handle click event for a post
+        val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+        val created_at_date = DateUtils.convertToSeoulTime(post.created_at)
+        val detailFragment = PostDetailFragment.newInstance(post.title, post.content, created_at_date)
+        fragmentTransaction.replace(R.id.main_Container, detailFragment)
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
     }
 
 }
