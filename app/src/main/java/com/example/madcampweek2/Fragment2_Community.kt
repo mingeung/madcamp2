@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.madcampweek2.PostAdapter
-import com.example.madcampweek2.Post
-import android.widget.Button // 추가된 부분
+
 
 class Fragment2_Community : Fragment() {
     private lateinit var recyclerView: RecyclerView
@@ -27,6 +27,11 @@ class Fragment2_Community : Fragment() {
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = postAdapter
+
+        // 각 항목에 수직 경계선 추가
+        val itemDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+
+        recyclerView.addItemDecoration(itemDecoration)
 
         // 예시 데이터
         val examplePosts = listOf(

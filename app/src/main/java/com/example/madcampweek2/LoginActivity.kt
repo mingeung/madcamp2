@@ -39,6 +39,10 @@ class LoginActivity : AppCompatActivity() {
         binding.registerButton.setOnClickListener {
             navigateToRegister()
         }
+        binding.passButton.setOnClickListener {
+            // 클릭 시 Fragment1_Home으로 이동
+            navigateToFragment1Home()
+        }
         binding.kakaoLoginButton.setOnClickListener {
             handleKakaoLogin()
         }
@@ -151,10 +155,14 @@ class LoginActivity : AppCompatActivity() {
                     editor.putBoolean("isLoggedIn", true)
                     editor.apply()
 
-                    // Navigate to MainActivity
+                    // Navigate to MainActivity 원래 버튼 주석처리
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
                     startActivity(intent)
                     finish()
+
+
+
+
                 } else {
                     Toast.makeText(this@LoginActivity, "Login failed: ${response.code()}", Toast.LENGTH_LONG).show()
                 }
@@ -168,6 +176,12 @@ class LoginActivity : AppCompatActivity() {
 
     private fun navigateToRegister() {
         val intent = Intent(this, RegisterActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+    //바로 넘어가는 버튼
+    private fun navigateToFragment1Home() {
+        val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
     }
