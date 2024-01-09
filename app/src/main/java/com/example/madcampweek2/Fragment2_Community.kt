@@ -9,9 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import retrofit2.http.POST
 
 
-class Fragment2_Community : Fragment() {
+class Fragment2_Community : Fragment(),PostAdapter.PostClickListener {
     private lateinit var recyclerView: RecyclerView
     private lateinit var postAdapter: PostAdapter
 
@@ -23,7 +24,8 @@ class Fragment2_Community : Fragment() {
         val view = inflater.inflate(R.layout.fragment2_community, container, false)
 
         recyclerView = view.findViewById(R.id.recycler)
-        postAdapter = PostAdapter()
+        postAdapter = PostAdapter(this)
+
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = postAdapter
@@ -48,7 +50,6 @@ class Fragment2_Community : Fragment() {
             Post("제목 2", "내용 2"),
             Post("제목 3", "내용 3")
         )
-
         // 어댑터에 데이터 설정
         postAdapter.setPosts(examplePosts)
 
@@ -68,4 +69,9 @@ class Fragment2_Community : Fragment() {
         return view
 
     }
+
+    override fun onPostClick(post: Post) {
+        // Handle click event for a post
+    }
+
 }

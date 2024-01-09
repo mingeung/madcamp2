@@ -8,12 +8,27 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.madcampweek2.R
 import com.example.madcampweek2.Post
 
-class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
+class PostAdapter(private val onPostClickListener: PostClickListener) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
+
     private var posts: List<Post> = emptyList()
 
     inner class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val titleTextView: TextView = itemView.findViewById(R.id.titleTextView)
         val contentTextView: TextView = itemView.findViewById(R.id.contentTextView)
+//        val createdAtTextView: TextView = itemView.findViewById(R.id.createdAtTextView)
+
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onPostClickListener.onPostClick(posts[position])
+                }
+            }
+        }
+    }
+
+    interface PostClickListener {
+        fun onPostClick(post: Post)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
@@ -25,6 +40,8 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
         val post = posts[position]
         holder.titleTextView.text = post.title
         holder.contentTextView.text = post.content
+//        holder.createdAtTextView.text = post.created_at.toString()
+
     }
 
     override fun getItemCount(): Int {

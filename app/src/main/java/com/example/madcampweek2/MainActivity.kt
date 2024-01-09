@@ -12,8 +12,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        checkLoginStatus()
+//바로 화면 넘어갈 수 있도록
+//        checkLoginStatus()
 
         setBottomNavigationView()
 
