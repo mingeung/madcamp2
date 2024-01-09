@@ -29,6 +29,7 @@ data class ProfileData(
 data class UserProfileResponse(
     val email: String,
     val nickname: String,
+    @SerializedName("class_group") val classGroup: String // Add this line
     // Add other fields as per your API response
 )
 

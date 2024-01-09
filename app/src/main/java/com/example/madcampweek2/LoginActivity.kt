@@ -39,6 +39,7 @@ class LoginActivity : AppCompatActivity() {
         binding.registerButton.setOnClickListener {
             navigateToRegister()
         }
+
         binding.kakaoLoginButton.setOnClickListener {
             handleKakaoLogin()
         }
@@ -46,17 +47,12 @@ class LoginActivity : AppCompatActivity() {
     private fun handleKakaoLogin() {
         UserApiClient.instance.loginWithKakaoAccount(this) { token, error ->
             if (error != null) {
-                // Handle login error
+                Log.e(TAG, "Kakao login error: $error")
+                // Optionally, show an error message or handle the error
             } else if (token != null) {
-                // Get user info from Kakao
-                UserApiClient.instance.me { user, error ->
-                    if (error != null) {
-                        // Handle error
-                    } else if (user != null && user.kakaoAccount?.email != null) {
-                        val email = user.kakaoAccount!!.email!!
-                        checkUserInSystem(email)
-                    }
-                }
+                Log.i(TAG, "Kakao login successful")
+                // Kakao login successful, navigate to RegisterActivity
+                navigateToRegister()
             }
         }
     }
@@ -90,8 +86,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun handleExistingUser(userId: Int?) {
-        // Implement logic to handle an existing user
-        // This could be logging them in or taking some other action
+        Log.i(TAG, "User exists. Navigating to MainActivity")
+        navigateToMainActivity()
     }
 
     private fun navigateToRegistration(email: String) {
@@ -165,6 +161,7 @@ class LoginActivity : AppCompatActivity() {
             }
         })
     }
+
 
     private fun navigateToRegister() {
         val intent = Intent(this, RegisterActivity::class.java)
