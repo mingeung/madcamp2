@@ -1,5 +1,6 @@
 package com.example.madcampweek2.network  // Replace with your actual package name
 
+import com.example.madcampweek2.Post
 import com.example.madcampweek2.model.NewUser
 import com.example.madcampweek2.model.ProfileData
 import com.example.madcampweek2.model.UserCheckResponse
@@ -30,4 +31,5 @@ interface ApiService {
 
     @GET("checkUser/")
     fun checkUser(@Query("email") email: String): Call<UserCheckResponse>
+
 }

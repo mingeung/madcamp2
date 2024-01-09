@@ -1,6 +1,8 @@
 package com.example.madcampweek2
 
+import PostService
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +11,17 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.madcampweek2.network.RetrofitClient.gson
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import retrofit2.http.POST
+//게시물 불러오기 때문에 import 하는 것들
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
 
 
 class Fragment2_Community : Fragment(),PostAdapter.PostClickListener {
@@ -26,32 +38,61 @@ class Fragment2_Community : Fragment(),PostAdapter.PostClickListener {
         recyclerView = view.findViewById(R.id.recycler)
         postAdapter = PostAdapter(this)
 
-
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = postAdapter
 
         // 각 항목에 수직 경계선 추가
         val itemDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-
         recyclerView.addItemDecoration(itemDecoration)
+        val gson : Gson = GsonBuilder()
+            .setLenient()
+            .create()
 
-        // 예시 데이터
-        val examplePosts = listOf(
-            Post("제목 1", "내용 1"),
-            Post("제목 2", "내용 2"),
-            Post("제목 3", "내용 3"),
-            Post("제목 1", "내용 1"),
-            Post("제목 2", "내용 2"),
-            Post("제목 3", "내용 3"),
-            Post("제목 1", "내용 1"),
-            Post("제목 2", "내용 2"),
-            Post("제목 3", "내용 3"),
-            Post("제목 1", "내용 1"),
-            Post("제목 2", "내용 2"),
-            Post("제목 3", "내용 3")
-        )
-        // 어댑터에 데이터 설정
-        postAdapter.setPosts(examplePosts)
+        // Retrofit을 사용하여 Django 서버에서 데이터 가져오기
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://10.0.2.2:8001/")
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+
+        val service = retrofit.create(PostService::class.java)
+        val call = service.getPosts()
+
+        call.enqueue(object : Callback<List<Post>> {
+            override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
+                if (response.isSuccessful) {
+                    val posts = response.body()
+                    posts?.let { postAdapter.setPosts(it) }
+                } else {
+                    // HTTP 요청이 성공하지 않은 경우, 오류 로그 출력
+                    Log.e("NetworkError", "HTTP error code: ${response.code()}")
+                    Log.e("NetworkError", "Error body: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<List<Post>>, t: Throwable) {
+                // 처리 실패 시 동작
+                Log.e("NetworkError", "Network request failed", t)
+            }
+        })
+
+
+//        // 예시 데이터
+//        val examplePosts = listOf(
+//            Post("제목 1", "내용 1"),
+//            Post("제목 2", "내용 2"),
+//            Post("제목 3", "내용 3"),
+//            Post("제목 1", "내용 1"),
+//            Post("제목 2", "내용 2"),
+//            Post("제목 3", "내용 3"),
+//            Post("제목 1", "내용 1"),
+//            Post("제목 2", "내용 2"),
+//            Post("제목 3", "내용 3"),
+//            Post("제목 1", "내용 1"),
+//            Post("제목 2", "내용 2"),
+//            Post("제목 3", "내용 3")
+//        )
+//        // 어댑터에 데이터 설정
+//        postAdapter.setPosts(examplePosts)
 
         //글쓰기 버튼에 대한 클릭 이벤트 처리
         view.findViewById<Button>(R.id.btnWrite).setOnClickListener {

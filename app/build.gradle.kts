@@ -59,6 +59,9 @@ dependencies {
 
     //recycler
     implementation( "androidx.recyclerview:recyclerview:1.3.0")
+    //디버깅을 위해
+    implementation ("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2")
+
 
 
 }
