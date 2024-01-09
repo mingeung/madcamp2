@@ -155,14 +155,10 @@ class LoginActivity : AppCompatActivity() {
                     editor.putBoolean("isLoggedIn", true)
                     editor.apply()
 
-                    // Navigate to MainActivity 원래 버튼 주석처리
+                    // Navigate to MainActivity
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
                     startActivity(intent)
                     finish()
-
-
-
-
                 } else {
                     Toast.makeText(this@LoginActivity, "Login failed: ${response.code()}", Toast.LENGTH_LONG).show()
                 }
