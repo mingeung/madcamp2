@@ -2,6 +2,8 @@ package com.example.madcampweek2.network
 
 import android.content.Context
 import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -54,11 +56,14 @@ object RetrofitClient {
 
             apiService = Retrofit.Builder()
                 .baseUrl("http://172.10.7.27:80/") // Replace with your base URL
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build()
                 .create(ApiService::class.java)
         }
         return apiService!!
     }
+    val gson : Gson = GsonBuilder()
+        .setLenient()
+        .create()
 }
