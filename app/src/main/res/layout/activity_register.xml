@@ -3,45 +3,97 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+
+    android:layout_marginRight="20dp"
+    android:layout_marginLeft="20dp"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="회원가입"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="50dp"
+    />
 
     <EditText
+        android:layout_marginTop="70dp"
         android:id="@+id/emailEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email" />
+        android:hint="Email"
+        android:layout_marginBottom="10dp"
+        />
 
     <EditText
         android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:layout_marginBottom="10dp"
+        />
 
     <EditText
         android:id="@+id/nameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Name" />
+        android:hint="Name"
+        android:layout_marginBottom="10dp"
+        />
 
     <EditText
         android:id="@+id/nicknameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nickname" />
+        android:hint="Nickname"
+        android:layout_marginBottom="10dp"
+        />
+
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="분반선택"
+        android:gravity="start"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="10dp"
+        />
 
     <!-- Spinner for Class Group Selection -->
-        <Spinner
-        android:id="@+id/classGroupSpinner"
+    <Spinner
+    android:id="@+id/classGroupSpinner"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Select Class Group"
+    android:entries="@array/class_groups"
+        />
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Select Class Group"
-        android:entries="@array/class_groups" />
+        android:layout_marginBottom="10dp"
+        android:gravity="right"
+        android:paddingRight="16dp"
 
-    <Button
-        android:id="@+id/registerButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Register"
-        android:onClick="onRegisterClicked"/>
+        >
+
+        <Button
+            android:id="@+id/registerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onRegisterClicked"
+            android:text="Register"
+            android:layout_gravity="bottom"
+            android:backgroundTint="@color/main"
+            android:layout_marginTop="10dp"
+
+            />
+
+    </RelativeLayout>
+
+
 </LinearLayout>

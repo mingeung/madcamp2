@@ -3,6 +3,8 @@ package com.example.madcampweek2
 
 import PostService
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +28,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 class Fragment2_Community : Fragment(),PostAdapter.PostClickListener {
     private lateinit var recyclerView: RecyclerView
     private lateinit var postAdapter: PostAdapter
+
+
+    override fun onResume() {
+        super.onResume()
+        // 화면이 다시 나타날 때마다 데이터를 새로 로드
+        loadData()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -106,6 +115,7 @@ class Fragment2_Community : Fragment(),PostAdapter.PostClickListener {
         }
         // 화면이 열릴 때마다 데이터를 새로 로드
         loadData()
+        onResume()
 
         return view
     }

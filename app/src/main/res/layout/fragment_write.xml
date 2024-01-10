@@ -15,27 +15,37 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/transparent"
+            android:background="@android:color/white"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
             <!-- 왼쪽 상단에 이전 페이지로 돌아가는 버튼 -->
-            <ImageButton
-                android:id="@+id/btnBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_back" />
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_back" />
 
-            <!-- 오른쪽 상단에 '업로드' 버튼 -->
-            <Button
-                android:id="@+id/btnUpload"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginRight="15dp"
-                android:backgroundTint="@color/main"
-                android:text="업로드"
-                android:textColor="#FFFFFF" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingRight="16dp"
+            android:backgroundTint="@color/white"
+            >            <!-- 오른쪽 상단에 '업로드' 버튼 -->
+        <Button
+            android:id="@+id/btnUpload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="@color/main"
+            android:text="업로드"
+            android:textColor="#FFFFFF" />
+
+
+        </RelativeLayout>
+
 
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -50,7 +60,7 @@
         android:inputType="text|textCapSentences"
         android:background="@android:color/transparent"
         android:textSize="30dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="15dp"
         />
 
     <EditText
@@ -59,12 +69,16 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/etTitle"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
         android:hint="내용을 입력하세요"
         android:imeOptions="actionDone"
-        android:inputType="text|textCapSentences"
-        android:background="@android:color/transparent"
-        android:layout_marginLeft="10dp"
-        />
+        android:inputType="textMultiLine"
+        android:scrollHorizontally="false"
+         />
+    <!--        android:inputType="text|textCapSentences"-->
+
 
 </RelativeLayout>
