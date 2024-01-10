@@ -20,6 +20,12 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val nameFromIntent = intent.getStringExtra("name")
+
+        // If there is a name, set it in the name EditText field
+        nameFromIntent?.let {
+            binding.nameEditText.setText(it)
+        }
     }
 
     fun onRegisterClicked(view: View) {
