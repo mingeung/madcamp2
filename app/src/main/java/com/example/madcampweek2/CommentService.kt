@@ -1,14 +1,25 @@
+//CommentService.kt
 import com.example.madcampweek2.PostDetailFragment
 import org.w3c.dom.Comment
 import retrofit2.Call
+import retrofit2.http.Body
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Query
-import retrofit2.http.Field
 
+
+data class CommentUploadRequest(
+    val post_id: Int,
+    val content: String
+)
+
+data class CommentUploadResponse(
+    val post_id: Int,
+    val content: String
+)
 interface CommentService {
-    // @POST 어노테이션을 사용하여 업로드할 엔드포인트 정의
-    // 필요한 경우 @Body 어노테이션을 사용하여 요청 본문을 정의할 수 있습니다.
     @POST("comments/upload/")
     fun uploadComment(
         @Header("Authorization") authToken: String,

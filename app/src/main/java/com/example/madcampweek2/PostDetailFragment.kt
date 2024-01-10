@@ -2,7 +2,9 @@
 
 package com.example.madcampweek2
 
+import CommentRequest
 import CommentService
+import CommentUploadResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,9 +26,7 @@ import com.google.android.material.textfield.TextInputEditText
 import org.w3c.dom.Comment
 
 class PostDetailFragment : Fragment() {
-
     companion object {
-
         fun newInstance(title: String, content: String, created_at: String): PostDetailFragment {
             val fragment = PostDetailFragment()
             val args = Bundle()
@@ -63,7 +63,7 @@ class PostDetailFragment : Fragment() {
 
         // 댓글 입력과 댓글 올리기 버튼
         val commentInputEditText = view.findViewById<TextInputEditText>(R.id.commentInputEditText)
-        val btnPostComment = view.findViewById<Button>(R.id.btnPostComment) // 수정된 부분
+        val btnPostComment = view.findViewById<Button>(R.id.btnPostComment)
 
         btnPostComment.setOnClickListener {
             // 댓글 입력 확인
@@ -72,13 +72,8 @@ class PostDetailFragment : Fragment() {
                 // 댓글이 입력되지 않았을 때 메시지 표시
                 Toast.makeText(requireContext(), "댓글을 입력하세요.", Toast.LENGTH_SHORT).show()
             } else {
-                // 댓글이 입력된 경우, 여기서 서버에 댓글을 업로드하는 코드를 추가할 수 있습니다.
-                // 이 예시에서는 간단하게 댓글이 입력되었다는 메시지만 출력합니다.
-                Toast.makeText(requireContext(), "댓글이 올라갔습니다: $comment", Toast.LENGTH_SHORT).show()
-
-                // 댓글 업로드 함수 호출
-                // postId는 실제로 해당 포스트의 고유 식별자여야 합니다. 수정이 필요한 경우 수정하세요.
                 val postId = 1  // 예시로 postId를 1로 지정
+                Toast.makeText(requireContext(), "댓글이 올라갔습니다: $comment", Toast.LENGTH_SHORT).show()
 //                uploadComment(comment, postId)
             }
         }
@@ -98,10 +93,12 @@ class PostDetailFragment : Fragment() {
 //
 //        if (authToken != null) {
 //            val commentService = RetrofitClient.getInstance(requireContext()).create(CommentService::class.java)
-//            val call = commentService.uploadComment("Token $authToken", postId, comment)
+//            // 댓글 업로드를 위한 Request 객체 생성
+//            val commentRequest = CommentRequest(postId, comment)
+//            val call = commentService.uploadComment("Token $authToken", commentRequest)
 //
-//            call.enqueue(object : Callback<YourCommentClass?> {
-//                override fun onResponse(call: Call<YourCommentClass?>, response: retrofit2.Response<YourCommentClass?>) {
+//            call.enqueue(object : Callback<CommentUploadResponse?> {
+//                override fun onResponse(call: Call<CommentUploadResponse?>, response: Response<CommentUploadResponse?>) {
 //                    if (response.isSuccessful) {
 //                        val newComment = response.body()
 //                        // 필요한대로 새로운 댓글을 처리합니다.
@@ -113,7 +110,7 @@ class PostDetailFragment : Fragment() {
 //                    }
 //                }
 //
-//                override fun onFailure(call: Call<YourCommentClass?>, t: Throwable) {
+//                override fun onFailure(call: Call<CommentUploadResponse?>, t: Throwable) {
 //                    // 실패를 처리합니다.
 //                    Log.e("CommentUpload", "댓글 업로드 중 오류 발생", t)
 //                }
