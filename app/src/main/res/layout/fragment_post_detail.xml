@@ -82,7 +82,7 @@
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/commentInputEditText"
-        android:layout_width="301dp"
+        android:layout_width="251dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"

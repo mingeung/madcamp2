@@ -39,10 +39,6 @@ class LoginActivity : AppCompatActivity() {
         binding.registerButton.setOnClickListener {
             navigateToRegister()
         }
-        binding.passButton.setOnClickListener {
-            // 클릭 시 Fragment1_Home으로 이동
-            navigateToFragment1Home()
-        }
         binding.kakaoLoginButton.setOnClickListener {
             handleKakaoLogin()
         }

@@ -47,10 +47,11 @@ class PostDetailFragment : Fragment() {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
-        val commentInputEditText = view.findViewById<TextInputEditText>(R.id.commentInputEditText)
+
         val btnPostComment = view.findViewById<Button>(R.id.btnPostComment)
 
         btnPostComment.setOnClickListener {
+            val commentInputEditText = view.findViewById<TextInputEditText>(R.id.commentInputEditText)
             val comment = commentInputEditText.text.toString()
             if (comment.isEmpty()) {
                 Toast.makeText(requireContext(), "댓글을 입력하세요.", Toast.LENGTH_SHORT).show()
@@ -59,6 +60,7 @@ class PostDetailFragment : Fragment() {
                 Toast.makeText(requireContext(), "댓글이 올라갔습니다: $comment", Toast.LENGTH_SHORT).show()
                 saveComment(comment, postId)
                 displayComments(postId, view)
+                commentInputEditText.text?.clear()
             }
         }
 
