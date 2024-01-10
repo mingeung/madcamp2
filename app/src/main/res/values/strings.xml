@@ -1,5 +1,5 @@
 <resources>
-    <string name="madcamp2_app">MadcampWeek2</string>
+    <string name="app_name">MadCo</string>
 
     <string-array name="class_groups">
         <item>Group 1</item>
