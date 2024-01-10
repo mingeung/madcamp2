@@ -1,3 +1,5 @@
+<!--fragment3_profile.xml-->
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -6,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+
         >
 
         <!-- Other UI elements like ImageView -->
@@ -17,10 +20,22 @@
             android:layout_marginTop="2dp"
             android:src="@drawable/small_logo" />
 
+
+        <ImageView
+            android:id="@+id/profileImageView"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_profile_image"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            />
+
         <LinearLayout
             android:layout_width="398dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="70dp"
             android:layout_marginRight="0dp"
             android:gravity="right"
             android:orientation="vertical"
@@ -29,37 +44,51 @@
 
             <TextView
                 android:id="@+id/usernameTextView"
-                android:layout_width="200dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="center"
                 android:text="Username"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="8dp" /> <!-- 간격 조절 -->
-            <TextView
+                android:layout_height="15dp" /> <!-- 간격 조절 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+>          <TextView
                 android:id="@+id/groupNumberTextView"
-                android:layout_width="200dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="center"
                 android:text="Group Number"
                 android:textSize="16sp" />
+            <TextView
+                android:id="@+id/groupTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="분반"
+                android:textSize="16sp" />
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="8dp" /> <!-- 간격 조절 -->
+                android:layout_height="15dp" /> <!-- 간격 조절 -->
             <TextView
                 android:id="@+id/emailTextView"
-                android:layout_width="200dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="center"
                 android:text="user@example.com"
                 android:textSize="16sp" />
 
 
         </LinearLayout>
+
+
     </LinearLayout>
 
     <Button

@@ -5,4 +5,5 @@
     <color name="red">#FF0000</color>
 <!--    <color name="main">#36D7B7</color>-->
     <color name="main">#F89500</color>
+    <color name="bottom_bar">#FFE8C5</color>
 </resources>

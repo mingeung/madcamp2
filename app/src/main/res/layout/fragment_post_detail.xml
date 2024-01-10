@@ -5,17 +5,13 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp">
-    <!-- 왼쪽 상단에 이전 페이지로 돌아가는 버튼 -->
+
     <ImageButton
         android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_back" />
-
-    <!-- 댓글 입력을 위한 TextInputEditText -->
-
-    <!-- 댓글 올리기 버튼 -->
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -37,9 +33,7 @@
             android:layout_marginTop="30dp"
             android:text="Title"
             android:textSize="40sp"
-            android:textStyle="bold"
-
-            />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/createdAtTextView"
@@ -50,9 +44,8 @@
             android:layout_marginTop="80dp"
             android:gravity="right"
             android:text="Created At"
-            android:textSize="15sp"
-            />
-        <!-- 경계선 -->
+            android:textSize="15sp" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -61,8 +54,7 @@
             android:layout_marginBottom="5dp"
             android:background="@android:color/darker_gray"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            />
+            android:layout_marginRight="10dp" />
 
         <TextView
             android:id="@+id/contentTextView"
@@ -75,7 +67,18 @@
             android:layout_marginRight="10dp"
             android:text="Content"
             android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/commentsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="400dp"
+            android:text="Comments"
+            android:textSize="20sp" />
+
     </androidx.cardview.widget.CardView>
+
+
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/commentInputEditText"
@@ -87,15 +90,6 @@
         android:layout_marginBottom="50dp"
         android:hint="댓글을 입력하세요" />
 
-<!--    <ImageView-->
-<!--        android:id="@+id/btnPostComment"-->
-<!--        android:layout_width="49dp"-->
-<!--        android:layout_height="51dp"-->
-<!--        android:layout_alignParentEnd="true"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_marginEnd="16dp"-->
-<!--        android:layout_marginBottom="6dp"-->
-<!--        android:src="@drawable/ic_up" />-->
     <Button
         android:id="@+id/btnPostComment"
         android:layout_width="60dp"
