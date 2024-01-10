@@ -40,7 +40,6 @@ object RetrofitClient {
                 .client(client)
                 .build()
                 .create(ApiService::class.java)
-            // Add other methods as needed, like checkUserByNickname
         }
         return apiService!!
     }

@@ -34,6 +34,6 @@ interface ApiService {
     @GET("checkUser/")
     fun checkUser(@Query("email") email: String): Call<UserCheckResponse>
 
-    @GET("/checkUserByNickname/{nickname}")
-    fun checkUserByNickname(@Path("nickname") nickname: String): Call<UserCheckResponse>
+    @GET("/checkUserByName/{name}")
+    fun checkUserByName(@Path("name") name: String): Call<UserCheckResponse>
 }

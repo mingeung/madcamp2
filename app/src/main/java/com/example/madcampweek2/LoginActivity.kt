@@ -56,18 +56,18 @@ class LoginActivity : AppCompatActivity() {
                     if (error != null) {
                         // Handle error
                     } else if (user != null) {
-                        val nickname = user.kakaoAccount?.profile?.nickname
-                        if (nickname != null) {
-                            checkUserInSystem(nickname)
+                        val name = user.kakaoAccount?.profile?.nickname
+                        if (name != null) {
+                            checkUserInSystem(name)
                         }
                     }
                 }
             }
         }
     }
-    private fun checkUserInSystem(nickname: String) {
+    private fun checkUserInSystem(name: String) {
         val apiService = RetrofitClient.getInstance(this)
-        apiService.checkUserByNickname(nickname).enqueue(object : Callback<UserCheckResponse> {
+        apiService.checkUserByName(name).enqueue(object : Callback<UserCheckResponse> {
             override fun onResponse(
                 call: Call<UserCheckResponse>,
                 response: Response<UserCheckResponse>
@@ -79,7 +79,7 @@ class LoginActivity : AppCompatActivity() {
                         handleExistingUser(userResponse.userId)
                     } else {
                         // User does not exist - redirect to registration
-                        navigateToRegistrationWithNickname(nickname)
+                        navigateToRegistrationWithName(name)
                     }
                 } else {
                     // Handle API error
@@ -93,9 +93,9 @@ class LoginActivity : AppCompatActivity() {
             }
         })
     }
-    private fun navigateToRegistrationWithNickname(nickname: String) {
+    private fun navigateToRegistrationWithName(name: String) {
         val intent = Intent(this, RegisterActivity::class.java)
-        intent.putExtra("nickname", nickname)
+        intent.putExtra("name", name)
         startActivity(intent)
     }
 
