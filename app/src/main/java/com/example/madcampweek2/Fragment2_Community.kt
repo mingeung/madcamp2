@@ -60,7 +60,7 @@ class Fragment2_Community : Fragment(),PostAdapter.PostClickListener {
             override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
                 if (response.isSuccessful) {
                     val posts = response.body()
-                    posts?.let { postAdapter.setPosts(it) }
+                    posts?.let { postAdapter.setPosts(it.reversed()) }
                 } else {
                     // HTTP 요청이 성공하지 않은 경우, 오류 로그 출력
                     Log.e("NetworkError", "HTTP error code: ${response.code()}")
@@ -104,9 +104,45 @@ class Fragment2_Community : Fragment(),PostAdapter.PostClickListener {
             // 변경사항 반영
             fragmentTransaction.commit()
         }
-        return view
+        // 화면이 열릴 때마다 데이터를 새로 로드
+        loadData()
 
+        return view
     }
+
+    private fun loadData() {
+        val gson: Gson = GsonBuilder()
+            .setLenient()
+            .create()
+
+        // Retrofit을 사용하여 Django 서버에서 데이터 가져오기
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://10.0.2.2:8001/")
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+
+        val service = retrofit.create(PostService::class.java)
+        val call = service.getPosts()
+
+        call.enqueue(object : Callback<List<Post>> {
+            override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
+                if (response.isSuccessful) {
+                    val posts = response.body()
+                    posts?.let {  postAdapter.setPosts(it.reversed())}
+                } else {
+                    // HTTP 요청이 성공하지 않은 경우, 오류 로그 출력
+                    Log.e("NetworkError", "HTTP error code: ${response.code()}")
+                    Log.e("NetworkError", "Error body: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<List<Post>>, t: Throwable) {
+                // 처리 실패 시 동작
+                Log.e("NetworkError", "Network request failed", t)
+            }
+        })
+    }
+
 
     override fun onPostClick(post: Post) {
         val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()

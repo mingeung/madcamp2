@@ -14,28 +14,74 @@
 
     <TextView
         android:id="@+id/titleTextView"
-        android:layout_width="match_parent"
+        android:layout_width="176dp"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="10dp"
         android:text="Title"
-        android:layout_marginBottom="8dp"/>
+        android:textSize="40sp"
+        android:textStyle="bold"
 
-    <TextView
-        android:id="@+id/contentTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:text="Content"
-        android:layout_below="@id/titleTextView"
-        android:layout_marginBottom="8dp"/>
+        />
 
     <TextView
         android:id="@+id/createdAtTextView"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="75dp"
+        android:gravity="right"
+        android:layout_marginEnd="22dp"
         android:text="Created At"
-        android:layout_below="@id/contentTextView"/>
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/contentTextView"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleTextView"
+        android:layout_marginBottom="10dp"
+        android:text="Content"
+        android:textSize="20sp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="60dp"
+        />
+
+    <!-- 댓글 입력을 위한 TextInputEditText -->
+
+    <!-- 댓글 올리기 버튼 -->
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/commentInputEditText"
+        android:layout_width="301dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="0dp"
+        android:hint="댓글을 입력하세요" />
+
+<!--    <ImageView-->
+<!--        android:id="@+id/btnPostComment"-->
+<!--        android:layout_width="49dp"-->
+<!--        android:layout_height="51dp"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        android:layout_marginBottom="6dp"-->
+<!--        android:src="@drawable/ic_up" />-->
+    <Button
+        android:id="@+id/btnPostComment"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@id/commentInputEditText"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/main"
+        android:padding="0dp"
+        android:text="댓글"
+        android:textSize="10dp" />
 
 </RelativeLayout>

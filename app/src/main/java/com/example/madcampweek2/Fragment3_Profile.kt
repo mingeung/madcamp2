@@ -51,7 +51,7 @@ class Fragment3_Profile : Fragment() {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
                     // Clear any stored authentication tokens or user data
-                    val sharedPrefs = requireActivity().getSharedPreferences("YourSharedPrefs", Context.MODE_PRIVATE)
+                    val sharedPrefs = requireActivity().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
                     sharedPrefs.edit().remove("authToken").apply()
 
                     // Start LoginActivity and clear the activity stack
