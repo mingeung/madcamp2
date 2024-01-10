@@ -12,31 +12,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitClient {
     private var apiService: ApiService? = null
 
+    val gson : Gson = GsonBuilder()
+        .setLenient()
+        .create()
+
     fun getInstance(context: Context): ApiService {
         if (apiService == null) {
-            val logging = HttpLoggingInterceptor().apply {
-                setLevel(HttpLoggingInterceptor.Level.BODY)
-            }
-
-            // Token Interceptor
-            val tokenInterceptor = okhttp3.Interceptor { chain ->
-                val originalRequest = chain.request()
-                val sharedPrefs = context.getSharedPreferences("YourSharedPrefs", Context.MODE_PRIVATE)
-                val token = sharedPrefs.getString("authToken", null)
-
-                val newRequest = if (token != null) {
-                    val requestWithToken = originalRequest.newBuilder()
-                        .addHeader("Authorization", "Token $token")
-                        .build()
-                    Log.d("OkHttp", "Sending request with token: $token")
-                    requestWithToken
-                } else {
-                    originalRequest
-                }
-
-                chain.proceed(newRequest)
-            }
-
             val client = OkHttpClient.Builder()
                 .addInterceptor { chain ->
                     val originalRequest = chain.request()
@@ -63,7 +44,4 @@ object RetrofitClient {
         }
         return apiService!!
     }
-    val gson : Gson = GsonBuilder()
-        .setLenient()
-        .create()
 }

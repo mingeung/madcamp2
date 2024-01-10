@@ -59,7 +59,7 @@ class WriteFragment : Fragment() {
 
     private fun uploadToServer(title: String, content: String) {
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8001/") // Django 서버의 주소로 변경
+            .baseUrl("http://172.10.7.27:80/") // Django 서버의 주소로 변경
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
