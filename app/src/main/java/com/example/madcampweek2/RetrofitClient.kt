@@ -1,7 +1,6 @@
 package com.example.madcampweek2.network
 
 import android.content.Context
-import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -12,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitClient {
     private var apiService: ApiService? = null
 
-    val gson : Gson = GsonBuilder()
+    val gson: Gson = GsonBuilder()
         .setLenient()
         .create()
 
@@ -41,6 +40,7 @@ object RetrofitClient {
                 .client(client)
                 .build()
                 .create(ApiService::class.java)
+            // Add other methods as needed, like checkUserByNickname
         }
         return apiService!!
     }

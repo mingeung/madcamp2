@@ -55,17 +55,19 @@ class LoginActivity : AppCompatActivity() {
                 UserApiClient.instance.me { user, error ->
                     if (error != null) {
                         // Handle error
-                    } else if (user != null && user.kakaoAccount?.email != null) {
-                        val email = user.kakaoAccount!!.email!!
-                        checkUserInSystem(email)
+                    } else if (user != null) {
+                        val nickname = user.kakaoAccount?.profile?.nickname
+                        if (nickname != null) {
+                            checkUserInSystem(nickname)
+                        }
                     }
                 }
             }
         }
     }
-    private fun checkUserInSystem(email: String) {
+    private fun checkUserInSystem(nickname: String) {
         val apiService = RetrofitClient.getInstance(this)
-        apiService.checkUser(email).enqueue(object : Callback<UserCheckResponse> {
+        apiService.checkUserByNickname(nickname).enqueue(object : Callback<UserCheckResponse> {
             override fun onResponse(
                 call: Call<UserCheckResponse>,
                 response: Response<UserCheckResponse>
@@ -77,7 +79,7 @@ class LoginActivity : AppCompatActivity() {
                         handleExistingUser(userResponse.userId)
                     } else {
                         // User does not exist - redirect to registration
-                        navigateToRegistration(email)
+                        navigateToRegistrationWithNickname(nickname)
                     }
                 } else {
                     // Handle API error
@@ -90,6 +92,11 @@ class LoginActivity : AppCompatActivity() {
                 handleNetworkError()
             }
         })
+    }
+    private fun navigateToRegistrationWithNickname(nickname: String) {
+        val intent = Intent(this, RegisterActivity::class.java)
+        intent.putExtra("nickname", nickname)
+        startActivity(intent)
     }
 
     private fun handleExistingUser(userId: Int?) {

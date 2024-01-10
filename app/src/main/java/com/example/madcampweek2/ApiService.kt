@@ -11,6 +11,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
@@ -32,4 +33,7 @@ interface ApiService {
 
     @GET("checkUser/")
     fun checkUser(@Query("email") email: String): Call<UserCheckResponse>
+
+    @GET("/checkUserByNickname/{nickname}")
+    fun checkUserByNickname(@Path("nickname") nickname: String): Call<UserCheckResponse>
 }
