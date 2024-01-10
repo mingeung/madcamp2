@@ -1,7 +1,5 @@
-//ApiService.kt
 package com.example.madcampweek2.network  // Replace with your actual package name
 
-import CommentService
 import com.example.madcampweek2.model.LoginResponse
 import com.example.madcampweek2.model.NewUser
 import com.example.madcampweek2.model.ProfileData
@@ -13,6 +11,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
@@ -34,6 +33,7 @@ interface ApiService {
 
     @GET("checkUser/")
     fun checkUser(@Query("email") email: String): Call<UserCheckResponse>
-    fun create(java: Class<CommentService>): Any
-//    abstract fun create(java: Class<CommentService>): Any
+
+    @GET("/checkUserByName/{name}")
+    fun checkUserByName(@Path("name") name: String): Call<UserCheckResponse>
 }

@@ -55,17 +55,19 @@ class LoginActivity : AppCompatActivity() {
                 UserApiClient.instance.me { user, error ->
                     if (error != null) {
                         // Handle error
-                    } else if (user != null && user.kakaoAccount?.email != null) {
-                        val email = user.kakaoAccount!!.email!!
-                        checkUserInSystem(email)
+                    } else if (user != null) {
+                        val name = user.kakaoAccount?.profile?.nickname
+                        if (name != null) {
+                            checkUserInSystem(name)
+                        }
                     }
                 }
             }
         }
     }
-    private fun checkUserInSystem(email: String) {
+    private fun checkUserInSystem(name: String) {
         val apiService = RetrofitClient.getInstance(this)
-        apiService.checkUser(email).enqueue(object : Callback<UserCheckResponse> {
+        apiService.checkUserByName(name).enqueue(object : Callback<UserCheckResponse> {
             override fun onResponse(
                 call: Call<UserCheckResponse>,
                 response: Response<UserCheckResponse>
@@ -77,7 +79,7 @@ class LoginActivity : AppCompatActivity() {
                         handleExistingUser(userResponse.userId)
                     } else {
                         // User does not exist - redirect to registration
-                        navigateToRegistration(email)
+                        navigateToRegistrationWithName(name)
                     }
                 } else {
                     // Handle API error
@@ -90,6 +92,11 @@ class LoginActivity : AppCompatActivity() {
                 handleNetworkError()
             }
         })
+    }
+    private fun navigateToRegistrationWithName(name: String) {
+        val intent = Intent(this, RegisterActivity::class.java)
+        intent.putExtra("name", name)
+        startActivity(intent)
     }
 
     private fun handleExistingUser(userId: Int?) {

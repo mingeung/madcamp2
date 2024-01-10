@@ -55,7 +55,7 @@ class RegisterActivity : AppCompatActivity() {
                         finish()
                     } else {
                         // Handle registration failure with specific error message
-                        Toast.makeText(this@RegisterActivity, "Registration failed: ${response.code()}", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@RegisterActivity, "Registration failed: mail already exits", Toast.LENGTH_LONG).show()
                     }
                 }
 
