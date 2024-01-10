@@ -27,9 +27,6 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (intent.getBooleanExtra("userExists", false)) {
-            Toast.makeText(this, "You are already registered", Toast.LENGTH_LONG).show()
-        }
 
         binding.loginButton.setOnClickListener {
             val email = binding.emailEditText.text.toString().trim()
