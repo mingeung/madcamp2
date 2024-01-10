@@ -14,7 +14,12 @@ object RetrofitClient {
 
     fun getInstance(context: Context): ApiService {
         if (apiService == null) {
+            val logging = HttpLoggingInterceptor().apply {
+                setLevel(HttpLoggingInterceptor.Level.BODY)
+            }
+
             val client = OkHttpClient.Builder()
+                .addInterceptor(logging)
                 .addInterceptor { chain ->
                     val originalRequest = chain.request()
                     val sharedPreferences = context.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
